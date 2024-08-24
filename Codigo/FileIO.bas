@@ -1511,7 +1511,6 @@ If UserList(UserIndex).flags.Mimetizado = 1 Then
 End If
 
 
-
 If FileExist(UserFile, vbNormal) Then
     If UserList(UserIndex).flags.Muerto = 1 Then
         OldUserHead = UserList(UserIndex).Char.Head

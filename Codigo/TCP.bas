@@ -276,17 +276,8 @@ ValidateSkills = True
 End Function
 
 Sub ConnectNewUser(ByVal UserIndex As Integer, ByRef name As String, ByRef Password As String, ByVal UserRaza As eRaza, ByVal UserSexo As eGenero, ByVal UserClase As eClass, _
-                    ByRef skills() As Byte, ByRef UserEmail As String, ByVal Hogar As eCiudad)
-'*************************************************
-'Author: Unknown
-'Last modified: 20/4/2007
-'Conecta un nuevo Usuario
-'23/01/2007 Pablo (ToxicWaste) - Agregué ResetFaccion al crear usuario
-'24/01/2007 Pablo (ToxicWaste) - Agregué el nuevo mana inicial de los magos.
-'12/02/2007 Pablo (ToxicWaste) - Puse + 1 de const al Elfo normal.
-'20/04/2007 Pablo (ToxicWaste) - Puse -1 de fuerza al Elfo.
-'09/01/2008 Pablo (ToxicWaste) - Ahora los modificadores de Raza se controlan desde Balance.dat
-'*************************************************
+                    ByRef UserEmail As String, ByVal Hogar As eCiudad)
+Dim LoopC As Long
 
 If Not AsciiValidos(name) Or LenB(name) = 0 Then
     Call WriteErrorMsg(UserIndex, "Nombre invalido.")
@@ -303,8 +294,7 @@ If UserList(UserIndex).flags.UserLogged Then
     Exit Sub
 End If
 
-Dim LoopC As Long
-Dim totalskpts As Long
+
 
 '¿Existe el personaje?
 If FileExist(CharPath & UCase$(name) & ".chr", vbNormal) = True Then
@@ -320,8 +310,6 @@ End If
 
 UserList(UserIndex).flags.Muerto = 0
 UserList(UserIndex).flags.Escondido = 0
-
-
 
 UserList(UserIndex).Reputacion.AsesinoRep = 0
 UserList(UserIndex).Reputacion.BandidoRep = 0
@@ -348,20 +336,8 @@ UserList(UserIndex).Stats.UserAtributos(eAtributos.Carisma) = UserList(UserIndex
 UserList(UserIndex).Stats.UserAtributos(eAtributos.Constitucion) = UserList(UserIndex).Stats.UserAtributos(eAtributos.Constitucion) + ModRaza(UserRaza).Constitucion
 '[/Pablo (Toxic Waste)]
 
-For LoopC = 1 To NUMSKILLS
-    UserList(UserIndex).Stats.UserSkills(LoopC) = skills(LoopC - 1)
-    totalskpts = totalskpts + Abs(UserList(UserIndex).Stats.UserSkills(LoopC))
-Next LoopC
 
-
-If totalskpts > 10 Then
-    Call LogHackAttemp(UserList(UserIndex).name & " intento hackear los skills.")
-    Call BorrarUsuario(UserList(UserIndex).name)
-    Call CloseSocket(UserIndex)
-    Exit Sub
-End If
-'%%%%%%%%%%%%% PREVENIR HACKEO DE LOS SKILLS %%%%%%%%%%%%%
-
+UserList(UserIndex).Stats.SkillPts = 10
 UserList(UserIndex).Char.heading = eHeading.SOUTH
 
 Call DarCuerpoYCabeza(UserIndex)

@@ -1408,16 +1408,12 @@ On Error GoTo Errhandler
     Dim UserName As String
     Dim Password As String
     Dim version As String
-    Dim skills(NUMSKILLS - 1) As Byte
     Dim race As eRaza
     Dim gender As eGenero
     Dim homeland As eCiudad
     Dim Class As eClass
     Dim mail As String
     
-#If SeguridadAlkon Then
-    Dim MD5 As String
-#End If
     
     If PuedeCrearPersonajes = 0 Then
         Call WriteErrorMsg(UserIndex, "La creacion de personajes en este servidor se ha deshabilitado.")
@@ -1444,26 +1440,17 @@ On Error GoTo Errhandler
     End If
     
     UserName = buffer.ReadASCIIString()
-    
-#If SeguridadAlkon Then
-    Password = buffer.ReadASCIIStringFixed(32)
-#Else
     Password = buffer.ReadASCIIString()
-#End If
     
     'Convert version number to string
     version = CStr(buffer.ReadByte()) & "." & CStr(buffer.ReadByte()) & "." & CStr(buffer.ReadByte())
     
     UserList(UserIndex).flags.NoActualizado = Not VersionesActuales(buffer.ReadInteger(), buffer.ReadInteger(), buffer.ReadInteger(), buffer.ReadInteger(), buffer.ReadInteger(), buffer.ReadInteger(), buffer.ReadInteger())
     
-#If SeguridadAlkon Then
-    MD5 = buffer.ReadASCIIStringFixed(16)
-#End If
     
     race = buffer.ReadByte()
     gender = buffer.ReadByte()
     Class = buffer.ReadByte()
-    Call buffer.ReadBlock(skills, NUMSKILLS)
     mail = buffer.ReadASCIIString()
     homeland = buffer.ReadByte()
     
@@ -1476,7 +1463,7 @@ On Error GoTo Errhandler
         If Not VersionOK(version) Then
             Call WriteErrorMsg(UserIndex, "Esta version del juego es obsoleta, la version correcta es " & ULTIMAVERSION & ". La misma se encuentra disponible en www.argentumonline.com.ar")
         Else
-            Call ConnectNewUser(UserIndex, UserName, Password, race, gender, Class, skills, mail, homeland)
+            Call ConnectNewUser(UserIndex, UserName, Password, race, gender, Class, mail, homeland)
         End If
 #If SeguridadAlkon Then
     End If
