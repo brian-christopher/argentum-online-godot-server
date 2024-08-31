@@ -1364,11 +1364,11 @@ Private Sub HandleThrowDices(ByVal UserIndex As Integer)
     Call UserList(UserIndex).incomingData.ReadByte
     
     With UserList(UserIndex).Stats
-        .UserAtributos(eAtributos.Fuerza) = 9 + RandomNumber(0, 4) + RandomNumber(0, 5)
-        .UserAtributos(eAtributos.Agilidad) = 9 + RandomNumber(0, 4) + RandomNumber(0, 5)
-        .UserAtributos(eAtributos.Inteligencia) = 12 + RandomNumber(0, 3) + RandomNumber(0, 3)
-        .UserAtributos(eAtributos.Carisma) = 12 + RandomNumber(0, 3) + RandomNumber(0, 3)
-        .UserAtributos(eAtributos.Constitucion) = 12 + RandomNumber(0, 3) + RandomNumber(0, 3)
+        .UserAtributos(eAtributos.Fuerza) = 18
+        .UserAtributos(eAtributos.Agilidad) = 18
+        .UserAtributos(eAtributos.Inteligencia) = 18
+        .UserAtributos(eAtributos.Carisma) = 18
+        .UserAtributos(eAtributos.Constitucion) = 18
     End With
     
     Call WriteDiceRoll(UserIndex)

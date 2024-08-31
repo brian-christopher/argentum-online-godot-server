@@ -338,6 +338,12 @@ UserList(UserIndex).Stats.UserAtributos(eAtributos.Constitucion) = UserList(User
 
 
 UserList(UserIndex).Stats.SkillPts = 10
+     
+    For LoopC = 1 To NUMSKILLS
+        UserList(UserIndex).Stats.UserSkills(LoopC) = 0
+    Next LoopC
+
+
 UserList(UserIndex).Char.heading = eHeading.SOUTH
 
 Call DarCuerpoYCabeza(UserIndex)
