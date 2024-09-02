@@ -13221,7 +13221,7 @@ End Sub
 ' @param    UserIndex User to which the message is intended.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteLoggedMessage(ByVal UserIndex As Integer)
+Public Sub WriteLoggedMessage(ByVal UserIndex As Integer, ByVal UserName As String)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -13229,6 +13229,7 @@ Public Sub WriteLoggedMessage(ByVal UserIndex As Integer)
 '***************************************************
 On Error GoTo Errhandler
     Call UserList(UserIndex).outgoingData.WriteByte(ServerPacketID.Logged)
+    Call UserList(UserIndex).outgoingData.WriteASCIIString(UserName)
 Exit Sub
 
 Errhandler:

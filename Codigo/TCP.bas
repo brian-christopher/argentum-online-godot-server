@@ -920,7 +920,7 @@ Call LoadUserReputacion(UserIndex, Leer)
 
 Set Leer = Nothing
 
-Call WriteLoggedMessage(UserIndex)
+Call WriteLoggedMessage(UserIndex, name)
 
 If UserList(UserIndex).Invent.EscudoEqpSlot = 0 Then UserList(UserIndex).Char.ShieldAnim = NingunEscudo
 If UserList(UserIndex).Invent.CascoEqpSlot = 0 Then UserList(UserIndex).Char.CascoAnim = NingunCasco
