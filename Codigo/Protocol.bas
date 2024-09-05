@@ -1796,17 +1796,17 @@ Private Sub HandleWalk(ByVal UserIndex As Integer)
                 Call WriteConsoleMsg(UserIndex, "Dejas de meditar.", FontTypeNames.FONTTYPE_INFO)
                 
                 Call SendData(SendTarget.ToPCArea, UserIndex, PrepareMessageCreateFX(.Char.CharIndex, 0, 0))
-            Else
-                'Move user
-                Call MoveUserChar(UserIndex, heading)
+            End If
+            
+            'Move user
+            Call MoveUserChar(UserIndex, heading)
                 
-                'Stop resting if needed
-                If .flags.Descansar Then
-                    .flags.Descansar = False
+            'Stop resting if needed
+            If .flags.Descansar Then
+                .flags.Descansar = False
                     
-                    Call WriteRestOK(UserIndex)
-                    Call WriteConsoleMsg(UserIndex, "Has dejado de descansar.", FontTypeNames.FONTTYPE_INFO)
-                End If
+                Call WriteRestOK(UserIndex)
+                Call WriteConsoleMsg(UserIndex, "Has dejado de descansar.", FontTypeNames.FONTTYPE_INFO)
             End If
         Else    'paralized
             If Not .flags.UltimoMensaje = 1 Then
