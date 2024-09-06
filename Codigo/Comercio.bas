@@ -41,7 +41,7 @@ Public Sub Comercio(ByVal Modo As eModoComercio, ByVal UserIndex As Integer, ByV
     If Cantidad < 1 Or Slot < 1 Then Exit Sub
     
     If Modo = eModoComercio.Compra Then
-        If Slot > MAX_INVENTORY_SLOTS Then
+        If Slot <= 0 Or Slot > MAX_INVENTORY_SLOTS Then
             Exit Sub
         ElseIf Cantidad > MAX_INVENTORY_OBJS Then
             Call SendData(SendTarget.ToAll, 0, PrepareMessageConsoleMsg(UserList(UserIndex).name & " ha sido baneado por el sistema anti-cheats.", FontTypeNames.FONTTYPE_FIGHT))
@@ -96,6 +96,9 @@ Public Sub Comercio(ByVal Modo As eModoComercio, ByVal UserIndex As Integer, ByV
         End If
         
     ElseIf Modo = eModoComercio.Venta Then
+        If Slot <= 0 Or Slot > MAX_INVENTORY_SLOTS Then
+            Exit Sub
+        End If
         
         If Cantidad > UserList(UserIndex).Invent.Object(Slot).amount Then Cantidad = UserList(UserIndex).Invent.Object(Slot).amount
         
